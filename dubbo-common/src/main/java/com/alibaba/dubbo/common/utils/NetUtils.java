@@ -198,7 +198,8 @@ public class NetUtils {
     }
     
     private static InetAddress getLocalAddress0() {
-        InetAddress localAddress = null;
+    	//不采用InetAddress.getLocalHost()获取本地ip地址
+    	/*InetAddress localAddress = null;
         try {
             localAddress = InetAddress.getLocalHost();
             if (isValidAddress(localAddress)) {
@@ -206,7 +207,7 @@ public class NetUtils {
             }
         } catch (Throwable e) {
             logger.warn("Failed to retriving ip address, " + e.getMessage(), e);
-        }
+        }*/
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
             if (interfaces != null) {
@@ -219,6 +220,7 @@ public class NetUtils {
                                 try {
                                     InetAddress address = addresses.nextElement();
                                     if (isValidAddress(address)) {
+                                    	System.out.println("Ip地址:" + address.getHostAddress());
                                         return address;
                                     }
                                 } catch (Throwable e) {
@@ -235,7 +237,7 @@ public class NetUtils {
             logger.warn("Failed to retriving ip address, " + e.getMessage(), e);
         }
         logger.error("Could not get local host ip address, will use 127.0.0.1 instead.");
-        return localAddress;
+        return null;
     }
     
     private static final Map<String, String> hostNameCache = new LRUCache<String, String>(1000);
