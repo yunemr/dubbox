@@ -299,11 +299,14 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
         boolean anyhost = false;
         if (NetUtils.isInvalidLocalHost(host)) {
             anyhost = true;
-            try {
+            /*try {
                 host = InetAddress.getLocalHost().getHostAddress();
             } catch (UnknownHostException e) {
                 logger.warn(e.getMessage(), e);
-            }
+            }*/
+            //修改获取本机ip地址的方法为如下
+            host = NetUtils.getLocalHost();
+            logger.info("ServiceConfig host : " + host);
             if (NetUtils.isInvalidLocalHost(host)) {
                 if (registryURLs != null && registryURLs.size() > 0) {
                     for (URL registryURL : registryURLs) {
